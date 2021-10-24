@@ -1,25 +1,65 @@
 package com.epam.task2.entity;
 
+import com.epam.task2.entity.criteria.Criteria;
 import com.epam.task2.entity.criteria.SearchCriteria;
 
 import java.util.Map;
 import java.util.Objects;
 
-public class Oven extends Appliance{
+public class Oven implements Appliance{
 	private int powerConsumption;
 	private int weight;
 	private int capacity;
 	private int depth;
-	private int height;
-	private int width;
+	private double height;
+	private double width;
+
+	public Oven() {}
 
 	public Oven(Map<String, Object> applianceData) {
 		powerConsumption = Integer.parseInt(applianceData.get(SearchCriteria.Oven.POWER_CONSUMPTION.toString()).toString());
 		weight = Integer.parseInt(applianceData.get(SearchCriteria.Oven.WEIGHT.toString()).toString());
 		capacity = Integer.parseInt(applianceData.get(SearchCriteria.Oven.CAPACITY.toString()).toString());
 		depth = Integer.parseInt(applianceData.get(SearchCriteria.Oven.DEPTH.toString()).toString());
-		height = Integer.parseInt(applianceData.get(SearchCriteria.Oven.HEIGHT.toString()).toString());
-		width = Integer.parseInt(applianceData.get(SearchCriteria.Oven.WIDTH.toString()).toString());
+		height = Double.parseDouble(applianceData.get(SearchCriteria.Oven.HEIGHT.toString()).toString());
+		width = Double.parseDouble(applianceData.get(SearchCriteria.Oven.WIDTH.toString()).toString());
+	}
+
+	@Override
+	public boolean containsCriteria(Criteria criteria) {
+		if (!criteria.getTypeAppliance().equals(SearchCriteria.Oven.class.getSimpleName())) {
+			return false;
+		}
+
+		Map<String, Object> criteriaOven = criteria.getCriteria();
+
+		boolean equal = !criteriaOven.isEmpty();
+
+		if (criteriaOven.containsKey(SearchCriteria.Oven.POWER_CONSUMPTION.toString())) {
+			int powerConsumption = Integer.parseInt(criteriaOven.get(SearchCriteria.Oven.POWER_CONSUMPTION.toString()).toString());
+			equal = this.powerConsumption == powerConsumption && equal;
+		}
+		if (criteriaOven.containsKey(SearchCriteria.Oven.WEIGHT.toString())) {
+			int weight = Integer.parseInt(criteriaOven.get(SearchCriteria.Oven.WEIGHT.toString()).toString());
+			equal = this.weight == weight && equal;
+		}
+		if (criteriaOven.containsKey(SearchCriteria.Oven.CAPACITY.toString())) {
+			int capacity = Integer.parseInt(criteriaOven.get(SearchCriteria.Oven.CAPACITY.toString()).toString());
+			equal = this.capacity == capacity && equal;
+		}
+		if (criteriaOven.containsKey(SearchCriteria.Oven.DEPTH.toString())) {
+			int depth = Integer.parseInt(criteriaOven.get(SearchCriteria.Oven.DEPTH.toString()).toString());
+			equal = this.depth == depth && equal;
+		}
+		if (criteriaOven.containsKey(SearchCriteria.Oven.HEIGHT.toString())) {
+			double height = Double.parseDouble(criteriaOven.get(SearchCriteria.Oven.HEIGHT.toString()).toString());
+			equal = this.height == height && equal;
+		}
+		if (criteriaOven.containsKey(SearchCriteria.Oven.WIDTH.toString())) {
+			double width = Double.parseDouble(criteriaOven.get(SearchCriteria.Oven.WIDTH.toString()).toString());
+			equal = this.width == width && equal;
+		}
+		return equal;
 	}
 
 	public int getPowerConsumption() {
@@ -54,19 +94,19 @@ public class Oven extends Appliance{
 		this.depth = depth;
 	}
 
-	public int getHeight() {
+	public double getHeight() {
 		return height;
 	}
 
-	public void setHeight(int height) {
+	public void setHeight(double height) {
 		this.height = height;
 	}
 
-	public int getWidth() {
+	public double getWidth() {
 		return width;
 	}
 
-	public void setWidth(int width) {
+	public void setWidth(double width) {
 		this.width = width;
 	}
 
@@ -75,7 +115,7 @@ public class Oven extends Appliance{
 		if (this == o) return true;
 		if (o == null || getClass() != o.getClass()) return false;
 		Oven oven = (Oven) o;
-		return powerConsumption == oven.powerConsumption && weight == oven.weight && capacity == oven.capacity && depth == oven.depth && height == oven.height && width == oven.width;
+		return powerConsumption == oven.powerConsumption && weight == oven.weight && capacity == oven.capacity && depth == oven.depth && Double.compare(oven.height, height) == 0 && Double.compare(oven.width, width) == 0;
 	}
 
 	@Override

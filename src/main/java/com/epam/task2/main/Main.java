@@ -5,12 +5,15 @@ import com.epam.task2.entity.criteria.Criteria;
 import com.epam.task2.service.ApplianceService;
 import com.epam.task2.service.ServiceFactory;
 import com.epam.task2.entity.criteria.SearchCriteria;
+import org.xml.sax.SAXException;
 
-import java.util.HashSet;
+import javax.xml.parsers.ParserConfigurationException;
+import java.io.IOException;
+import java.util.*;
 
 public class Main {
 
-	public static void main(String[] args) {
+	public static void main(String[] args) throws IOException, SAXException, ParserConfigurationException {
 		HashSet<Appliance> appliances;
 
 		ServiceFactory factory = ServiceFactory.getInstance();
@@ -18,11 +21,10 @@ public class Main {
 
 		//////////////////////////////////////////////////////////////////
 
-		Criteria criteriaOven = new Criteria(SearchCriteria.Oven.class.getSimpleName());//"Oven"
-		criteriaOven.add(SearchCriteria.Oven.CAPACITY.toString(), 33);
-		criteriaOven.add(SearchCriteria.Oven.DEPTH.toString(), 60);
+		Criteria criteriaLaptop = new Criteria(SearchCriteria.Laptop.class.getSimpleName());
+		criteriaLaptop.add(SearchCriteria.Laptop.CPU.toString(), 2.2);
 
-		appliances = service.find(criteriaOven);
+		appliances = service.find(criteriaLaptop);
 
 		PrintApplianceInfo.print(appliances);
 	}

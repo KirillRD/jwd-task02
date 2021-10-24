@@ -6,13 +6,16 @@ import com.epam.task2.entity.Appliance;
 import com.epam.task2.entity.criteria.Criteria;
 import com.epam.task2.service.ApplianceService;
 import com.epam.task2.service.validation.Validator;
+import org.xml.sax.SAXException;
 
+import javax.xml.parsers.ParserConfigurationException;
+import java.io.IOException;
 import java.util.HashSet;
 
 public class ApplianceServiceImpl implements ApplianceService{
 
 	@Override
-	public HashSet<Appliance> find(Criteria criteria) {
+	public HashSet<Appliance> find(Criteria criteria) throws ParserConfigurationException, SAXException, IOException {
 		if (!Validator.criteriaValidator(criteria)) {
 			return null;
 		}

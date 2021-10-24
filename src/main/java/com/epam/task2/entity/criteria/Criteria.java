@@ -6,15 +6,15 @@ import java.util.Objects;
 
 public class Criteria {
 
-	private String groupSearchName;
+	private String typeAppliance;
 	private Map<String, Object> criteria = new HashMap<String, Object>();
 
-	public Criteria(String groupSearchName) {
-		this.groupSearchName = groupSearchName;
+	public Criteria(String typeAppliance) {
+		this.typeAppliance = typeAppliance;
 	}
 	
-	public String getGroupSearchName() {
-		return groupSearchName;
+	public String getTypeAppliance() {
+		return typeAppliance;
 	}
 
 	public void add(String searchCriteria, Object value) {
@@ -30,11 +30,11 @@ public class Criteria {
 		if (this == o) return true;
 		if (o == null || getClass() != o.getClass()) return false;
 		Criteria criteria1 = (Criteria) o;
-		return Objects.equals(groupSearchName, criteria1.groupSearchName) && Objects.equals(criteria, criteria1.criteria);
+		return Objects.equals(typeAppliance, criteria1.typeAppliance) && Objects.equals(criteria, criteria1.criteria);
 	}
 
 	@Override
 	public int hashCode() {
-		return Objects.hash(groupSearchName, criteria);
+		return Objects.hash(typeAppliance, criteria);
 	}
 }

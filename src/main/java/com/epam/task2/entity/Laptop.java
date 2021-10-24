@@ -1,17 +1,20 @@
 package com.epam.task2.entity;
 
+import com.epam.task2.entity.criteria.Criteria;
 import com.epam.task2.entity.criteria.SearchCriteria;
 
 import java.util.Map;
 import java.util.Objects;
 
-public class Laptop extends Appliance{
+public class Laptop implements Appliance{
 	private double batteryCapacity;
 	private String os;
 	private int memoryROM;
 	private int systemMemory;
 	private double cpu;
 	private int displayINCHS;
+
+	public Laptop() {}
 
 	public Laptop(Map<String, Object> applianceData) {
 		batteryCapacity = Double.parseDouble(applianceData.get(SearchCriteria.Laptop.BATTERY_CAPACITY.toString()).toString());
@@ -20,6 +23,43 @@ public class Laptop extends Appliance{
 		systemMemory = Integer.parseInt(applianceData.get(SearchCriteria.Laptop.SYSTEM_MEMORY.toString()).toString());
 		cpu = Double.parseDouble(applianceData.get(SearchCriteria.Laptop.CPU.toString()).toString());
 		displayINCHS = Integer.parseInt(applianceData.get(SearchCriteria.Laptop.DISPLAY_INCHS.toString()).toString());
+	}
+
+	@Override
+	public boolean containsCriteria(Criteria criteria) {
+		if (!criteria.getTypeAppliance().equals(SearchCriteria.Laptop.class.getSimpleName())) {
+			return false;
+		}
+
+		Map<String, Object> criteriaLaptop = criteria.getCriteria();
+
+		boolean equal = !criteriaLaptop.isEmpty();
+
+		if (criteriaLaptop.containsKey(SearchCriteria.Laptop.BATTERY_CAPACITY.toString())) {
+			double batteryCapacity = Double.parseDouble(criteriaLaptop.get(SearchCriteria.Laptop.BATTERY_CAPACITY.toString()).toString());
+			equal = this.batteryCapacity == batteryCapacity && equal;
+		}
+		if (criteriaLaptop.containsKey(SearchCriteria.Laptop.OS.toString())) {
+			String os = (String) criteriaLaptop.get(SearchCriteria.Laptop.OS.toString());
+			equal = this.os.equals(os) && equal;
+		}
+		if (criteriaLaptop.containsKey(SearchCriteria.Laptop.MEMORY_ROM.toString())) {
+			int memoryROM = Integer.parseInt(criteriaLaptop.get(SearchCriteria.Laptop.MEMORY_ROM.toString()).toString());
+			equal = this.memoryROM == memoryROM && equal;
+		}
+		if (criteriaLaptop.containsKey(SearchCriteria.Laptop.SYSTEM_MEMORY.toString())) {
+			int systemMemory = Integer.parseInt(criteriaLaptop.get(SearchCriteria.Laptop.SYSTEM_MEMORY.toString()).toString());
+			equal = this.systemMemory == systemMemory && equal;
+		}
+		if (criteriaLaptop.containsKey(SearchCriteria.Laptop.CPU.toString())) {
+			double cpu = Double.parseDouble(criteriaLaptop.get(SearchCriteria.Laptop.CPU.toString()).toString());
+			equal = this.cpu == cpu && equal;
+		}
+		if (criteriaLaptop.containsKey(SearchCriteria.Laptop.DISPLAY_INCHS.toString())) {
+			int displayINCHS = Integer.parseInt(criteriaLaptop.get(SearchCriteria.Laptop.DISPLAY_INCHS.toString()).toString());
+			equal = this.displayINCHS == displayINCHS && equal;
+		}
+		return equal;
 	}
 
 	public double getBatteryCapacity() {

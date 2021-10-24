@@ -1,5 +1,9 @@
 package com.epam.task2.entity;
 
-public class Appliance {
-	// you may add your own code here
+import com.epam.task2.entity.criteria.Criteria;
+
+import java.util.HashSet;
+
+public interface Appliance {
+    boolean containsCriteria(Criteria criteria);
 }

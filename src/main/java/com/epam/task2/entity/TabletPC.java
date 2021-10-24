@@ -1,16 +1,19 @@
 package com.epam.task2.entity;
 
+import com.epam.task2.entity.criteria.Criteria;
 import com.epam.task2.entity.criteria.SearchCriteria;
 
 import java.util.Map;
 import java.util.Objects;
 
-public class TabletPC extends Appliance{
+public class TabletPC implements Appliance{
 	private int batteryCapacity;
     private int displayINCHS;
     private int memoryROM;
     private int flashMemoryCapacity;
     private String color;
+
+    public TabletPC() {}
 
     public TabletPC(Map<String, Object> applianceData) {
         batteryCapacity = Integer.parseInt(applianceData.get(SearchCriteria.TabletPC.BATTERY_CAPACITY.toString()).toString());
@@ -18,6 +21,39 @@ public class TabletPC extends Appliance{
         memoryROM = Integer.parseInt(applianceData.get(SearchCriteria.TabletPC.MEMORY_ROM.toString()).toString());
         flashMemoryCapacity = Integer.parseInt(applianceData.get(SearchCriteria.TabletPC.FLASH_MEMORY_CAPACITY.toString()).toString());
         color = (String) applianceData.get(SearchCriteria.TabletPC.COLOR.toString());
+    }
+
+    @Override
+    public boolean containsCriteria(Criteria criteria) {
+        if (!criteria.getTypeAppliance().equals(SearchCriteria.TabletPC.class.getSimpleName())) {
+            return false;
+        }
+
+        Map<String, Object> criteriaTabletPC = criteria.getCriteria();
+
+        boolean equal = !criteriaTabletPC.isEmpty();
+
+        if (criteriaTabletPC.containsKey(SearchCriteria.TabletPC.BATTERY_CAPACITY.toString())) {
+            int batteryCapacity = Integer.parseInt(criteriaTabletPC.get(SearchCriteria.TabletPC.BATTERY_CAPACITY.toString()).toString());
+            equal = this.batteryCapacity == batteryCapacity && equal;
+        }
+        if (criteriaTabletPC.containsKey(SearchCriteria.TabletPC.DISPLAY_INCHES.toString())) {
+            int displayINCHS = Integer.parseInt(criteriaTabletPC.get(SearchCriteria.TabletPC.DISPLAY_INCHES.toString()).toString());
+            equal = this.displayINCHS == displayINCHS && equal;
+        }
+        if (criteriaTabletPC.containsKey(SearchCriteria.TabletPC.MEMORY_ROM.toString())) {
+            int memoryROM = Integer.parseInt(criteriaTabletPC.get(SearchCriteria.TabletPC.MEMORY_ROM.toString()).toString());
+            equal = this.memoryROM == memoryROM && equal;
+        }
+        if (criteriaTabletPC.containsKey(SearchCriteria.TabletPC.FLASH_MEMORY_CAPACITY.toString())) {
+            int flashMemoryCapacity = Integer.parseInt(criteriaTabletPC.get(SearchCriteria.TabletPC.FLASH_MEMORY_CAPACITY.toString()).toString());
+            equal = this.flashMemoryCapacity == flashMemoryCapacity && equal;
+        }
+        if (criteriaTabletPC.containsKey(SearchCriteria.TabletPC.COLOR.toString())) {
+            String color = (String) criteriaTabletPC.get(SearchCriteria.TabletPC.COLOR.toString());
+            equal = this.color.equals(color) && equal;
+        }
+        return equal;
     }
 
     public int getBatteryCapacity() {
