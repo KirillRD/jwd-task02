@@ -4,32 +4,46 @@ import com.epam.task2.dao.ApplianceDAO;
 import com.epam.task2.dao.DAOFactory;
 import com.epam.task2.entity.Appliance;
 import com.epam.task2.entity.criteria.Criteria;
+import com.epam.task2.exсeption.DAOException;
+import com.epam.task2.exсeption.ServiceException;
 import com.epam.task2.service.ApplianceService;
 import com.epam.task2.service.validation.Validator;
-import org.xml.sax.SAXException;
 
-import javax.xml.parsers.ParserConfigurationException;
-import java.io.IOException;
 import java.util.HashSet;
 
 public class ApplianceServiceImpl implements ApplianceService{
 
 	@Override
-	public HashSet<Appliance> find(Criteria criteria) throws ParserConfigurationException, SAXException, IOException {
+	public HashSet<Appliance> find(Criteria criteria) throws ServiceException {
 		if (!Validator.criteriaValidator(criteria)) {
-			return null;
+			throw new ServiceException();
+		}
+
+		HashSet<Appliance> appliances;
+		try {
+			DAOFactory factory = DAOFactory.getInstance();
+			ApplianceDAO applianceDAO = factory.getApplianceDAO();
+
+			appliances = applianceDAO.find(criteria);
+		} catch (DAOException e) {
+			throw new ServiceException(e);
 		}
 		
-		DAOFactory factory = DAOFactory.getInstance();
-		ApplianceDAO applianceDAO = factory.getApplianceDAO();
-
-		HashSet<Appliance> appliance = applianceDAO.find(criteria);
-		
-		// you may add your own code here
-		
-		return appliance;
+		return appliances;
 	}
 
-}
+	@Override
+	public void addAppliance(Appliance appliance) throws ServiceException {
+		// TODO добавить валидатор
+		//if throw new ServiceException();
 
-//you may add your own new classes
+		try {
+			DAOFactory factory = DAOFactory.getInstance();
+			ApplianceDAO applianceDAO = factory.getApplianceDAO();
+
+			applianceDAO.addAppliance(appliance);
+		} catch (DAOException e) {
+			throw new ServiceException(e);
+		}
+	}
+}

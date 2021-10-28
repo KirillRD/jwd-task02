@@ -9,20 +9,29 @@ import java.util.Objects;
 public class Laptop implements Appliance{
 	private double batteryCapacity;
 	private String os;
-	private int memoryROM;
-	private int systemMemory;
+	private double memoryROM;
+	private double systemMemory;
 	private double cpu;
-	private int displayINCHS;
+	private double displayINCHES;
 
 	public Laptop() {}
+
+	public Laptop(double batteryCapacity, String os, double memoryROM, double systemMemory, double cpu, double displayINCHES) {
+		this.batteryCapacity = batteryCapacity;
+		this.os = os;
+		this.memoryROM = memoryROM;
+		this.systemMemory = systemMemory;
+		this.cpu = cpu;
+		this.displayINCHES = displayINCHES;
+	}
 
 	public Laptop(Map<String, Object> applianceData) {
 		batteryCapacity = Double.parseDouble(applianceData.get(SearchCriteria.Laptop.BATTERY_CAPACITY.toString()).toString());
 		os = (String) applianceData.get(SearchCriteria.Laptop.OS.toString());
-		memoryROM = Integer.parseInt(applianceData.get(SearchCriteria.Laptop.MEMORY_ROM.toString()).toString());
-		systemMemory = Integer.parseInt(applianceData.get(SearchCriteria.Laptop.SYSTEM_MEMORY.toString()).toString());
+		memoryROM = Double.parseDouble(applianceData.get(SearchCriteria.Laptop.MEMORY_ROM.toString()).toString());
+		systemMemory = Double.parseDouble(applianceData.get(SearchCriteria.Laptop.SYSTEM_MEMORY.toString()).toString());
 		cpu = Double.parseDouble(applianceData.get(SearchCriteria.Laptop.CPU.toString()).toString());
-		displayINCHS = Integer.parseInt(applianceData.get(SearchCriteria.Laptop.DISPLAY_INCHS.toString()).toString());
+		displayINCHES = Double.parseDouble(applianceData.get(SearchCriteria.Laptop.DISPLAY_INCHES.toString()).toString());
 	}
 
 	@Override
@@ -44,20 +53,20 @@ public class Laptop implements Appliance{
 			equal = this.os.equals(os) && equal;
 		}
 		if (criteriaLaptop.containsKey(SearchCriteria.Laptop.MEMORY_ROM.toString())) {
-			int memoryROM = Integer.parseInt(criteriaLaptop.get(SearchCriteria.Laptop.MEMORY_ROM.toString()).toString());
+			double memoryROM = Double.parseDouble(criteriaLaptop.get(SearchCriteria.Laptop.MEMORY_ROM.toString()).toString());
 			equal = this.memoryROM == memoryROM && equal;
 		}
 		if (criteriaLaptop.containsKey(SearchCriteria.Laptop.SYSTEM_MEMORY.toString())) {
-			int systemMemory = Integer.parseInt(criteriaLaptop.get(SearchCriteria.Laptop.SYSTEM_MEMORY.toString()).toString());
+			double systemMemory = Double.parseDouble(criteriaLaptop.get(SearchCriteria.Laptop.SYSTEM_MEMORY.toString()).toString());
 			equal = this.systemMemory == systemMemory && equal;
 		}
 		if (criteriaLaptop.containsKey(SearchCriteria.Laptop.CPU.toString())) {
 			double cpu = Double.parseDouble(criteriaLaptop.get(SearchCriteria.Laptop.CPU.toString()).toString());
 			equal = this.cpu == cpu && equal;
 		}
-		if (criteriaLaptop.containsKey(SearchCriteria.Laptop.DISPLAY_INCHS.toString())) {
-			int displayINCHS = Integer.parseInt(criteriaLaptop.get(SearchCriteria.Laptop.DISPLAY_INCHS.toString()).toString());
-			equal = this.displayINCHS == displayINCHS && equal;
+		if (criteriaLaptop.containsKey(SearchCriteria.Laptop.DISPLAY_INCHES.toString())) {
+			double displayINCHES = Double.parseDouble(criteriaLaptop.get(SearchCriteria.Laptop.DISPLAY_INCHES.toString()).toString());
+			equal = this.displayINCHES == displayINCHES && equal;
 		}
 		return equal;
 	}
@@ -78,19 +87,19 @@ public class Laptop implements Appliance{
 		this.os = os;
 	}
 
-	public int getMemoryROM() {
+	public double getMemoryROM() {
 		return memoryROM;
 	}
 
-	public void setMemoryROM(int memoryROM) {
+	public void setMemoryROM(double memoryROM) {
 		this.memoryROM = memoryROM;
 	}
 
-	public int getSystemMemory() {
+	public double getSystemMemory() {
 		return systemMemory;
 	}
 
-	public void setSystemMemory(int systemMemory) {
+	public void setSystemMemory(double systemMemory) {
 		this.systemMemory = systemMemory;
 	}
 
@@ -102,12 +111,12 @@ public class Laptop implements Appliance{
 		this.cpu = cpu;
 	}
 
-	public int getDisplayINCHS() {
-		return displayINCHS;
+	public double getDisplayINCHES() {
+		return displayINCHES;
 	}
 
-	public void setDisplayINCHS(int displayINCHS) {
-		this.displayINCHS = displayINCHS;
+	public void setDisplayINCHES(double displayINCHES) {
+		this.displayINCHES = displayINCHES;
 	}
 
 	@Override
@@ -115,12 +124,12 @@ public class Laptop implements Appliance{
 		if (this == o) return true;
 		if (o == null || getClass() != o.getClass()) return false;
 		Laptop laptop = (Laptop) o;
-		return Double.compare(laptop.batteryCapacity, batteryCapacity) == 0 && memoryROM == laptop.memoryROM && systemMemory == laptop.systemMemory && Double.compare(laptop.cpu, cpu) == 0 && displayINCHS == laptop.displayINCHS && Objects.equals(os, laptop.os);
+		return Double.compare(laptop.batteryCapacity, batteryCapacity) == 0 && Double.compare(laptop.memoryROM, memoryROM) == 0 && Double.compare(laptop.systemMemory, systemMemory) == 0 && Double.compare(laptop.cpu, cpu) == 0 && Double.compare(laptop.displayINCHES, displayINCHES) == 0 && Objects.equals(os, laptop.os);
 	}
 
 	@Override
 	public int hashCode() {
-		return Objects.hash(batteryCapacity, os, memoryROM, systemMemory, cpu, displayINCHS);
+		return Objects.hash(batteryCapacity, os, memoryROM, systemMemory, cpu, displayINCHES);
 	}
 
 	@Override
@@ -131,7 +140,7 @@ public class Laptop implements Appliance{
 				", memoryROM=" + memoryROM +
 				", systemMemory=" + systemMemory +
 				", cpu=" + cpu +
-				", displayINCHS=" + displayINCHS +
+				", displayINCHES=" + displayINCHES +
 				'}';
 	}
 }

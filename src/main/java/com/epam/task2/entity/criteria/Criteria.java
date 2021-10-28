@@ -38,3 +38,4 @@ public class Criteria {
 		return Objects.hash(typeAppliance, criteria);
 	}
 }
+// TODO добавить toString и сделать List<Object>

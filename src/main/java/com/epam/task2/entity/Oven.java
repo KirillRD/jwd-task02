@@ -7,20 +7,29 @@ import java.util.Map;
 import java.util.Objects;
 
 public class Oven implements Appliance{
-	private int powerConsumption;
-	private int weight;
-	private int capacity;
-	private int depth;
+	private double powerConsumption;
+	private double weight;
+	private double capacity;
+	private double depth;
 	private double height;
 	private double width;
 
 	public Oven() {}
 
+	public Oven(double powerConsumption, double weight, double capacity, double depth, double height, double width) {
+		this.powerConsumption = powerConsumption;
+		this.weight = weight;
+		this.capacity = capacity;
+		this.depth = depth;
+		this.height = height;
+		this.width = width;
+	}
+
 	public Oven(Map<String, Object> applianceData) {
-		powerConsumption = Integer.parseInt(applianceData.get(SearchCriteria.Oven.POWER_CONSUMPTION.toString()).toString());
-		weight = Integer.parseInt(applianceData.get(SearchCriteria.Oven.WEIGHT.toString()).toString());
-		capacity = Integer.parseInt(applianceData.get(SearchCriteria.Oven.CAPACITY.toString()).toString());
-		depth = Integer.parseInt(applianceData.get(SearchCriteria.Oven.DEPTH.toString()).toString());
+		powerConsumption = Double.parseDouble(applianceData.get(SearchCriteria.Oven.POWER_CONSUMPTION.toString()).toString());
+		weight = Double.parseDouble(applianceData.get(SearchCriteria.Oven.WEIGHT.toString()).toString());
+		capacity = Double.parseDouble(applianceData.get(SearchCriteria.Oven.CAPACITY.toString()).toString());
+		depth = Double.parseDouble(applianceData.get(SearchCriteria.Oven.DEPTH.toString()).toString());
 		height = Double.parseDouble(applianceData.get(SearchCriteria.Oven.HEIGHT.toString()).toString());
 		width = Double.parseDouble(applianceData.get(SearchCriteria.Oven.WIDTH.toString()).toString());
 	}
@@ -36,19 +45,19 @@ public class Oven implements Appliance{
 		boolean equal = !criteriaOven.isEmpty();
 
 		if (criteriaOven.containsKey(SearchCriteria.Oven.POWER_CONSUMPTION.toString())) {
-			int powerConsumption = Integer.parseInt(criteriaOven.get(SearchCriteria.Oven.POWER_CONSUMPTION.toString()).toString());
+			double powerConsumption = Double.parseDouble(criteriaOven.get(SearchCriteria.Oven.POWER_CONSUMPTION.toString()).toString());
 			equal = this.powerConsumption == powerConsumption && equal;
 		}
 		if (criteriaOven.containsKey(SearchCriteria.Oven.WEIGHT.toString())) {
-			int weight = Integer.parseInt(criteriaOven.get(SearchCriteria.Oven.WEIGHT.toString()).toString());
+			double weight = Double.parseDouble(criteriaOven.get(SearchCriteria.Oven.WEIGHT.toString()).toString());
 			equal = this.weight == weight && equal;
 		}
 		if (criteriaOven.containsKey(SearchCriteria.Oven.CAPACITY.toString())) {
-			int capacity = Integer.parseInt(criteriaOven.get(SearchCriteria.Oven.CAPACITY.toString()).toString());
+			double capacity = Double.parseDouble(criteriaOven.get(SearchCriteria.Oven.CAPACITY.toString()).toString());
 			equal = this.capacity == capacity && equal;
 		}
 		if (criteriaOven.containsKey(SearchCriteria.Oven.DEPTH.toString())) {
-			int depth = Integer.parseInt(criteriaOven.get(SearchCriteria.Oven.DEPTH.toString()).toString());
+			double depth = Double.parseDouble(criteriaOven.get(SearchCriteria.Oven.DEPTH.toString()).toString());
 			equal = this.depth == depth && equal;
 		}
 		if (criteriaOven.containsKey(SearchCriteria.Oven.HEIGHT.toString())) {
@@ -62,35 +71,35 @@ public class Oven implements Appliance{
 		return equal;
 	}
 
-	public int getPowerConsumption() {
+	public double getPowerConsumption() {
 		return powerConsumption;
 	}
 
-	public void setPowerConsumption(int powerConsumption) {
+	public void setPowerConsumption(double powerConsumption) {
 		this.powerConsumption = powerConsumption;
 	}
 
-	public int getWeight() {
+	public double getWeight() {
 		return weight;
 	}
 
-	public void setWeight(int weight) {
+	public void setWeight(double weight) {
 		this.weight = weight;
 	}
 
-	public int getCapacity() {
+	public double getCapacity() {
 		return capacity;
 	}
 
-	public void setCapacity(int capacity) {
+	public void setCapacity(double capacity) {
 		this.capacity = capacity;
 	}
 
-	public int getDepth() {
+	public double getDepth() {
 		return depth;
 	}
 
-	public void setDepth(int depth) {
+	public void setDepth(double depth) {
 		this.depth = depth;
 	}
 
@@ -115,7 +124,7 @@ public class Oven implements Appliance{
 		if (this == o) return true;
 		if (o == null || getClass() != o.getClass()) return false;
 		Oven oven = (Oven) o;
-		return powerConsumption == oven.powerConsumption && weight == oven.weight && capacity == oven.capacity && depth == oven.depth && Double.compare(oven.height, height) == 0 && Double.compare(oven.width, width) == 0;
+		return Double.compare(oven.powerConsumption, powerConsumption) == 0 && Double.compare(oven.weight, weight) == 0 && Double.compare(oven.capacity, capacity) == 0 && Double.compare(oven.depth, depth) == 0 && Double.compare(oven.height, height) == 0 && Double.compare(oven.width, width) == 0;
 	}
 
 	@Override

@@ -16,5 +16,4 @@ public final class ServiceFactory {
 	public static ServiceFactory getInstance() {
 		return instance;
 	}
-
 }

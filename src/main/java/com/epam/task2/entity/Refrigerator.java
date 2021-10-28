@@ -7,22 +7,31 @@ import java.util.Map;
 import java.util.Objects;
 
 public class Refrigerator implements Appliance{
-	private int powerConsumption;
-    private int weight;
-    private int freezerCapacity;
+	private double powerConsumption;
+    private double weight;
+    private double freezerCapacity;
     private double overallCapacity;
-    private int height;
-    private int width;
+    private double height;
+    private double width;
 
     public Refrigerator() {}
 
+    public Refrigerator(double powerConsumption, double weight, double freezerCapacity, double overallCapacity, double height, double width) {
+        this.powerConsumption = powerConsumption;
+        this.weight = weight;
+        this.freezerCapacity = freezerCapacity;
+        this.overallCapacity = overallCapacity;
+        this.height = height;
+        this.width = width;
+    }
+
     public Refrigerator(Map<String, Object> applianceData) {
-        powerConsumption = Integer.parseInt(applianceData.get(SearchCriteria.Refrigerator.POWER_CONSUMPTION.toString()).toString());
-        weight = Integer.parseInt(applianceData.get(SearchCriteria.Refrigerator.WEIGHT.toString()).toString());
-        freezerCapacity = Integer.parseInt(applianceData.get(SearchCriteria.Refrigerator.FREEZER_CAPACITY.toString()).toString());
+        powerConsumption = Double.parseDouble(applianceData.get(SearchCriteria.Refrigerator.POWER_CONSUMPTION.toString()).toString());
+        weight = Double.parseDouble(applianceData.get(SearchCriteria.Refrigerator.WEIGHT.toString()).toString());
+        freezerCapacity = Double.parseDouble(applianceData.get(SearchCriteria.Refrigerator.FREEZER_CAPACITY.toString()).toString());
         overallCapacity = Double.parseDouble(applianceData.get(SearchCriteria.Refrigerator.OVERALL_CAPACITY.toString()).toString());
-        height = Integer.parseInt(applianceData.get(SearchCriteria.Refrigerator.HEIGHT.toString()).toString());
-        width = Integer.parseInt(applianceData.get(SearchCriteria.Refrigerator.WIDTH.toString()).toString());
+        height = Double.parseDouble(applianceData.get(SearchCriteria.Refrigerator.HEIGHT.toString()).toString());
+        width = Double.parseDouble(applianceData.get(SearchCriteria.Refrigerator.WIDTH.toString()).toString());
     }
 
     @Override
@@ -36,15 +45,15 @@ public class Refrigerator implements Appliance{
         boolean equal = !criteriaRefrigerator.isEmpty();
 
         if (criteriaRefrigerator.containsKey(SearchCriteria.Refrigerator.POWER_CONSUMPTION.toString())) {
-            int powerConsumption = Integer.parseInt(criteriaRefrigerator.get(SearchCriteria.Refrigerator.POWER_CONSUMPTION.toString()).toString());
+            double powerConsumption = Double.parseDouble(criteriaRefrigerator.get(SearchCriteria.Refrigerator.POWER_CONSUMPTION.toString()).toString());
             equal = this.powerConsumption == powerConsumption && equal;
         }
         if (criteriaRefrigerator.containsKey(SearchCriteria.Refrigerator.WEIGHT.toString())) {
-            int weight = Integer.parseInt(criteriaRefrigerator.get(SearchCriteria.Refrigerator.WEIGHT.toString()).toString());
+            double weight = Double.parseDouble(criteriaRefrigerator.get(SearchCriteria.Refrigerator.WEIGHT.toString()).toString());
             equal = this.weight == weight && equal;
         }
         if (criteriaRefrigerator.containsKey(SearchCriteria.Refrigerator.FREEZER_CAPACITY.toString())) {
-            int freezerCapacity = Integer.parseInt(criteriaRefrigerator.get(SearchCriteria.Refrigerator.FREEZER_CAPACITY.toString()).toString());
+            double freezerCapacity = Double.parseDouble(criteriaRefrigerator.get(SearchCriteria.Refrigerator.FREEZER_CAPACITY.toString()).toString());
             equal = this.freezerCapacity == freezerCapacity && equal;
         }
         if (criteriaRefrigerator.containsKey(SearchCriteria.Refrigerator.OVERALL_CAPACITY.toString())) {
@@ -52,37 +61,37 @@ public class Refrigerator implements Appliance{
             equal = this.overallCapacity == overallCapacity && equal;
         }
         if (criteriaRefrigerator.containsKey(SearchCriteria.Refrigerator.HEIGHT.toString())) {
-            int height = Integer.parseInt(criteriaRefrigerator.get(SearchCriteria.Refrigerator.HEIGHT.toString()).toString());
+            double height = Double.parseDouble(criteriaRefrigerator.get(SearchCriteria.Refrigerator.HEIGHT.toString()).toString());
             equal = this.height == height && equal;
         }
         if (criteriaRefrigerator.containsKey(SearchCriteria.Refrigerator.WIDTH.toString())) {
-            int width = Integer.parseInt(criteriaRefrigerator.get(SearchCriteria.Refrigerator.WIDTH.toString()).toString());
+            double width = Double.parseDouble(criteriaRefrigerator.get(SearchCriteria.Refrigerator.WIDTH.toString()).toString());
             equal = this.width == width && equal;
         }
         return equal;
     }
 
-    public int getPowerConsumption() {
+    public double getPowerConsumption() {
         return powerConsumption;
     }
 
-    public void setPowerConsumption(int powerConsumption) {
+    public void setPowerConsumption(double powerConsumption) {
         this.powerConsumption = powerConsumption;
     }
 
-    public int getWeight() {
+    public double getWeight() {
         return weight;
     }
 
-    public void setWeight(int weight) {
+    public void setWeight(double weight) {
         this.weight = weight;
     }
 
-    public int getFreezerCapacity() {
+    public double getFreezerCapacity() {
         return freezerCapacity;
     }
 
-    public void setFreezerCapacity(int freezerCapacity) {
+    public void setFreezerCapacity(double freezerCapacity) {
         this.freezerCapacity = freezerCapacity;
     }
 
@@ -94,19 +103,19 @@ public class Refrigerator implements Appliance{
         this.overallCapacity = overallCapacity;
     }
 
-    public int getHeight() {
+    public double getHeight() {
         return height;
     }
 
-    public void setHeight(int height) {
+    public void setHeight(double height) {
         this.height = height;
     }
 
-    public int getWidth() {
+    public double getWidth() {
         return width;
     }
 
-    public void setWidth(int width) {
+    public void setWidth(double width) {
         this.width = width;
     }
 
@@ -115,7 +124,7 @@ public class Refrigerator implements Appliance{
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
         Refrigerator that = (Refrigerator) o;
-        return powerConsumption == that.powerConsumption && weight == that.weight && freezerCapacity == that.freezerCapacity && Double.compare(that.overallCapacity, overallCapacity) == 0 && height == that.height && width == that.width;
+        return Double.compare(that.powerConsumption, powerConsumption) == 0 && Double.compare(that.weight, weight) == 0 && Double.compare(that.freezerCapacity, freezerCapacity) == 0 && Double.compare(that.overallCapacity, overallCapacity) == 0 && Double.compare(that.height, height) == 0 && Double.compare(that.width, width) == 0;
     }
 
     @Override

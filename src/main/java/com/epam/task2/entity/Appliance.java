@@ -1,9 +1,7 @@
 package com.epam.task2.entity;
 
 import com.epam.task2.entity.criteria.Criteria;
-
-import java.util.HashSet;
-
+// TODO название Applianceable
 public interface Appliance {
     boolean containsCriteria(Criteria criteria);
 }

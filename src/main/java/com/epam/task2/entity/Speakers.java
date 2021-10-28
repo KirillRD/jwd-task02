@@ -7,18 +7,25 @@ import java.util.Map;
 import java.util.Objects;
 
 public class Speakers implements Appliance{
-    private int powerConsumption;
-    private int numberOfSpeakers;
+    private double powerConsumption;
+    private double numberOfSpeakers;
     private String frequencyRange;
-    private int cordLength;
+    private double cordLength;
 
     public Speakers() {}
 
+    public Speakers(double powerConsumption, double numberOfSpeakers, String frequencyRange, double cordLength) {
+        this.powerConsumption = powerConsumption;
+        this.numberOfSpeakers = numberOfSpeakers;
+        this.frequencyRange = frequencyRange;
+        this.cordLength = cordLength;
+    }
+
     public Speakers(Map<String, Object> applianceData) {
-        powerConsumption = Integer.parseInt(applianceData.get(SearchCriteria.Speakers.POWER_CONSUMPTION.toString()).toString());
-        numberOfSpeakers = Integer.parseInt(applianceData.get(SearchCriteria.Speakers.NUMBER_OF_SPEAKERS.toString()).toString());
+        powerConsumption = Double.parseDouble(applianceData.get(SearchCriteria.Speakers.POWER_CONSUMPTION.toString()).toString());
+        numberOfSpeakers = Double.parseDouble(applianceData.get(SearchCriteria.Speakers.NUMBER_OF_SPEAKERS.toString()).toString());
         frequencyRange = (String) applianceData.get(SearchCriteria.Speakers.FREQUENCY_RANGE.toString());
-        cordLength = Integer.parseInt(applianceData.get(SearchCriteria.Speakers.CORD_LENGTH.toString()).toString());
+        cordLength = Double.parseDouble(applianceData.get(SearchCriteria.Speakers.CORD_LENGTH.toString()).toString());
     }
 
     @Override
@@ -32,11 +39,11 @@ public class Speakers implements Appliance{
         boolean equal = !criteriaSpeakers.isEmpty();
 
         if (criteriaSpeakers.containsKey(SearchCriteria.Speakers.POWER_CONSUMPTION.toString())) {
-            int powerConsumption = Integer.parseInt(criteriaSpeakers.get(SearchCriteria.Speakers.POWER_CONSUMPTION.toString()).toString());
+            double powerConsumption = Double.parseDouble(criteriaSpeakers.get(SearchCriteria.Speakers.POWER_CONSUMPTION.toString()).toString());
             equal = this.powerConsumption == powerConsumption && equal;
         }
         if (criteriaSpeakers.containsKey(SearchCriteria.Speakers.NUMBER_OF_SPEAKERS.toString())) {
-            int numberOfSpeakers = Integer.parseInt(criteriaSpeakers.get(SearchCriteria.Speakers.NUMBER_OF_SPEAKERS.toString()).toString());
+            double numberOfSpeakers = Double.parseDouble(criteriaSpeakers.get(SearchCriteria.Speakers.NUMBER_OF_SPEAKERS.toString()).toString());
             equal = this.numberOfSpeakers == numberOfSpeakers && equal;
         }
         if (criteriaSpeakers.containsKey(SearchCriteria.Speakers.FREQUENCY_RANGE.toString())) {
@@ -44,25 +51,25 @@ public class Speakers implements Appliance{
             equal = this.frequencyRange.equals(frequencyRange) && equal;
         }
         if (criteriaSpeakers.containsKey(SearchCriteria.Speakers.CORD_LENGTH.toString())) {
-            int cordLength = Integer.parseInt(criteriaSpeakers.get(SearchCriteria.Speakers.CORD_LENGTH.toString()).toString());
+            double cordLength = Double.parseDouble(criteriaSpeakers.get(SearchCriteria.Speakers.CORD_LENGTH.toString()).toString());
             equal = this.cordLength == cordLength && equal;
         }
         return equal;
     }
 
-    public int getPowerConsumption() {
+    public double getPowerConsumption() {
         return powerConsumption;
     }
 
-    public void setPowerConsumption(int powerConsumption) {
+    public void setPowerConsumption(double powerConsumption) {
         this.powerConsumption = powerConsumption;
     }
 
-    public int getNumberOfSpeakers() {
+    public double getNumberOfSpeakers() {
         return numberOfSpeakers;
     }
 
-    public void setNumberOfSpeakers(int numberOfSpeakers) {
+    public void setNumberOfSpeakers(double numberOfSpeakers) {
         this.numberOfSpeakers = numberOfSpeakers;
     }
 
@@ -74,11 +81,11 @@ public class Speakers implements Appliance{
         this.frequencyRange = frequencyRange;
     }
 
-    public int getCordLength() {
+    public double getCordLength() {
         return cordLength;
     }
 
-    public void setCordLength(int cordLength) {
+    public void setCordLength(double cordLength) {
         this.cordLength = cordLength;
     }
 
@@ -87,7 +94,7 @@ public class Speakers implements Appliance{
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
         Speakers speakers = (Speakers) o;
-        return powerConsumption == speakers.powerConsumption && numberOfSpeakers == speakers.numberOfSpeakers && cordLength == speakers.cordLength && Objects.equals(frequencyRange, speakers.frequencyRange);
+        return Double.compare(speakers.powerConsumption, powerConsumption) == 0 && Double.compare(speakers.numberOfSpeakers, numberOfSpeakers) == 0 && Double.compare(speakers.cordLength, cordLength) == 0 && Objects.equals(frequencyRange, speakers.frequencyRange);
     }
 
     @Override
