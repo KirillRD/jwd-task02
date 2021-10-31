@@ -1,7 +1,8 @@
-package com.epam.task2.dao.parser;
+package com.epam.task2.dao.xml.parser;
 
+import com.epam.task2.dao.xml.constant.APPLIANCE_TYPES_XML;
 import com.epam.task2.entity.Appliance;
-import com.epam.task2.entity.ApplianceFactory;
+import com.epam.task2.dao.factory.ApplianceFactory;
 import org.xml.sax.Attributes;
 import org.xml.sax.SAXException;
 import org.xml.sax.helpers.DefaultHandler;
@@ -21,14 +22,12 @@ public final class ApplianceXMLParser {
 
     private ApplianceXMLParser() {}
 
-    public static Map<String, List<Appliance>> getAppliances() throws ParserConfigurationException, SAXException, IOException {
+    public static Map<String, List<Appliance>> getAppliances(File dbFile) throws ParserConfigurationException, SAXException, IOException {
         SAXParserFactory parserFactory = SAXParserFactory.newInstance();
         SAXParser parser = parserFactory.newSAXParser();
 
         XMLParser xmlParser = new XMLParser();
-        // TODO путь файла
-        String pathToFile = "e:\\Users\\Kirill\\Programs\\EPAM\\jwd-task02\\src\\main\\resources\\appliances_db.xml";
-        parser.parse(new File(pathToFile), xmlParser);
+        parser.parse(dbFile, xmlParser);
 
         return appliances;
     }
@@ -41,12 +40,12 @@ public final class ApplianceXMLParser {
         @Override
         public void startElement(String uri, String localName, String qName, Attributes attributes) throws SAXException {
             tagValue = new StringBuffer();
-            if (qName.equals("appliance")) {
-                typeAppliance = attributes.getValue("type");
+            if (APPLIANCE_TYPES_XML.getApplianceType(qName) != null) {
+                typeAppliance = APPLIANCE_TYPES_XML.getApplianceType(qName);
                 applianceData = new HashMap<String, Object>();
-            }
-            if (!appliances.containsKey(typeAppliance)) {
-                appliances.put(typeAppliance, new ArrayList<Appliance>());
+                if (!appliances.containsKey(typeAppliance)) {
+                    appliances.put(typeAppliance, new ArrayList<Appliance>());
+                }
             }
         }
 
@@ -58,7 +57,7 @@ public final class ApplianceXMLParser {
         @Override
         public void endElement(String uri, String localName, String qName) throws SAXException {
             applianceData.put(qName.toUpperCase().replaceAll("-", "_"), tagValue.toString());
-            if (qName.equals("appliance")) {
+            if (typeAppliance.equals(APPLIANCE_TYPES_XML.getApplianceType(qName))) {
                 appliances.get(typeAppliance).add(ApplianceFactory.createAppliance(typeAppliance, applianceData));
             }
         }

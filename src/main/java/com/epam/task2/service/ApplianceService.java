@@ -2,7 +2,6 @@ package com.epam.task2.service;
 
 import com.epam.task2.entity.Appliance;
 import com.epam.task2.entity.criteria.Criteria;
-import com.epam.task2.exсeption.ServiceException;
 
 import java.util.HashSet;
 

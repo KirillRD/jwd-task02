@@ -1,15 +1,12 @@
 package com.epam.task2.main;
 
-import com.epam.task2.entity.Appliance;
-import com.epam.task2.entity.Speakers;
-import com.epam.task2.entity.VacuumCleaner;
-import com.epam.task2.entity.criteria.Criteria;
-import com.epam.task2.exсeption.ServiceException;
+import com.epam.task2.entity.*;
+import com.epam.task2.entity.criteria.*;
+import com.epam.task2.service.ServiceException;
 import com.epam.task2.service.ApplianceService;
 import com.epam.task2.service.ServiceFactory;
-import com.epam.task2.entity.criteria.SearchCriteria;
 
-import java.util.*;
+import java.util.HashSet;
 
 public class Main {
 
@@ -21,21 +18,40 @@ public class Main {
 
 		//////////////////////////////////////////////////////////////////
 
-		Criteria criteriaVacuumCleaner = new Criteria(SearchCriteria.VacuumCleaner.class.getSimpleName());
-		criteriaVacuumCleaner.add(SearchCriteria.VacuumCleaner.FILTER_TYPE.toString(), "A");
-		criteriaVacuumCleaner.add(SearchCriteria.VacuumCleaner.FILTER_TYPE.toString(), "B");
-		criteriaVacuumCleaner.add(SearchCriteria.VacuumCleaner.FILTER_TYPE.toString(), "C");
+//		Criteria criteriaLaptop = new Criteria(SearchCriteria.Laptop.class.getSimpleName());
+//		criteriaLaptop.add(SearchCriteria.Laptop.OS.toString(), "linux");
+//		criteriaLaptop.add(SearchCriteria.Laptop.OS.toString(), "windows");
+//		criteriaLaptop.add(SearchCriteria.Laptop.MEMORY_ROM.toString(), 8000);
 
-		appliances = service.find(criteriaVacuumCleaner);
+//		Criteria criteriaLaptop = new Criteria(SearchCriteria.Laptop.class.getSimpleName());
+//		criteriaLaptop.add(SearchCriteria.Laptop.OS.toString(), "linux");
+//		criteriaLaptop.add(SearchCriteria.Laptop.OS.toString(), "windows");
+//		criteriaLaptop.add(SearchCriteria.Laptop.MEMORY_ROM.toString(), 8000);
+//
+//		appliances = service.find(criteriaLaptop);
+//
+//		PrintApplianceInfo.print(appliances);
 
-		PrintApplianceInfo.print(appliances);
-//		service.addAppliance(new VacuumCleaner(
-//				23,
-//				"ert",
-//				"hhh",
-//				"bbbbbbbbb",
-//				567,
-//				90000
-//		));
+
+//		Criteria criteriaSpeakers = new Criteria(SearchCriteria.Speakers.class.getSimpleName());
+//		criteriaSpeakers.add(SearchCriteria.Speakers.CORD_LENGTH.toString(), 2);
+//		criteriaSpeakers.add(SearchCriteria.Speakers.CORD_LENGTH.toString(), 3);
+//		criteriaSpeakers.add(SearchCriteria.Speakers.FREQUENCY_RANGE.toString(), "3-4");
+//
+//		appliances = service.find(criteriaSpeakers);
+//
+//		PrintApplianceInfo.print(appliances);
+
+
+		service.addAppliance(new VacuumCleaner(
+				12,
+				"A",
+				"y2",
+				"all-in-one",
+				567,
+				34
+		));
+
+//		service.addAppliance(new VacuumCleaner());
 	}
 }

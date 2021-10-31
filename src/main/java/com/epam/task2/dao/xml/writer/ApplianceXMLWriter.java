@@ -1,5 +1,6 @@
-package com.epam.task2.dao.writer;
+package com.epam.task2.dao.xml.writer;
 
+import com.epam.task2.dao.xml.constant.APPLIANCE_TYPES_XML;
 import com.epam.task2.entity.*;
 import com.epam.task2.entity.criteria.SearchCriteria;
 import org.w3c.dom.Document;
@@ -12,6 +13,7 @@ import javax.xml.parsers.ParserConfigurationException;
 import javax.xml.transform.*;
 import javax.xml.transform.dom.DOMSource;
 import javax.xml.transform.stream.StreamResult;
+import java.io.File;
 import java.io.IOException;
 
 public final class ApplianceXMLWriter {
@@ -21,25 +23,22 @@ public final class ApplianceXMLWriter {
     private ApplianceXMLWriter() {}
 
     private static void setElement(String nameField, String valueField) {
-        Element element = document.createElement(nameField);
-        element.setTextContent(valueField);
+        Element element = document.createElement(nameField.toLowerCase().replaceAll("_", "-"));
+        element.setTextContent(valueField.toLowerCase().replaceAll("_", "-"));
         newAppliance.appendChild(element);
     }
 
-    public static void saveAppliance(Appliance appliance) throws ParserConfigurationException, IOException, SAXException, TransformerException {
+    public static void saveAppliance(Appliance appliance, File dbFile) throws ParserConfigurationException, IOException, SAXException, TransformerException {
         DocumentBuilderFactory documentBuilderFactory = DocumentBuilderFactory.newInstance();
         DocumentBuilder documentBuilder = documentBuilderFactory.newDocumentBuilder();
-        // TODO путь файла
-        String pathToFile = "e:\\Users\\Kirill\\Programs\\EPAM\\jwd-task02\\src\\main\\resources\\appliances_db.xml";
-        document = documentBuilder.parse(pathToFile);
+        document = documentBuilder.parse(dbFile);
 
-        Element appliances = (Element) document.getElementsByTagName("appliances").item(0);
+        Element appliances = (Element) document.getElementsByTagName("apl:appliances").item(0);
 
-        newAppliance = document.createElement("appliance");
-        newAppliance.setAttribute("type", appliance.getClass().getSimpleName());
+        newAppliance = document.createElement(APPLIANCE_TYPES_XML.getApplianceTypeXML(appliance.getClass().getSimpleName()));
 
-        switch(appliance.getClass().getSimpleName()) {
-            case "Laptop":
+        switch(APPLIANCE_TYPES_XML.valueOf(appliance.getClass().getSimpleName())) {
+            case Laptop:
                 Laptop laptop = (Laptop) appliance;
                 setElement(SearchCriteria.Laptop.BATTERY_CAPACITY.toString(), String.valueOf(laptop.getBatteryCapacity()));
                 setElement(SearchCriteria.Laptop.OS.toString(), String.valueOf(laptop.getOs()));
@@ -48,7 +47,7 @@ public final class ApplianceXMLWriter {
                 setElement(SearchCriteria.Laptop.CPU.toString(), String.valueOf(laptop.getCpu()));
                 setElement(SearchCriteria.Laptop.DISPLAY_INCHES.toString(), String.valueOf(laptop.getDisplayINCHES()));
                 break;
-            case "Oven":
+            case Oven:
                 Oven oven = (Oven) appliance;
                 setElement(SearchCriteria.Oven.POWER_CONSUMPTION.toString(), String.valueOf(oven.getPowerConsumption()));
                 setElement(SearchCriteria.Oven.WEIGHT.toString(), String.valueOf(oven.getWeight()));
@@ -57,7 +56,7 @@ public final class ApplianceXMLWriter {
                 setElement(SearchCriteria.Oven.HEIGHT.toString(), String.valueOf(oven.getHeight()));
                 setElement(SearchCriteria.Oven.WIDTH.toString(), String.valueOf(oven.getWidth()));
                 break;
-            case "Refrigerator":
+            case Refrigerator:
                 Refrigerator refrigerator = (Refrigerator) appliance;
                 setElement(SearchCriteria.Refrigerator.POWER_CONSUMPTION.toString(), String.valueOf(refrigerator.getPowerConsumption()));
                 setElement(SearchCriteria.Refrigerator.WEIGHT.toString(), String.valueOf(refrigerator.getWeight()));
@@ -66,14 +65,14 @@ public final class ApplianceXMLWriter {
                 setElement(SearchCriteria.Refrigerator.HEIGHT.toString(), String.valueOf(refrigerator.getHeight()));
                 setElement(SearchCriteria.Refrigerator.WIDTH.toString(), String.valueOf(refrigerator.getWidth()));
                 break;
-            case "Speakers":
+            case Speakers:
                 Speakers speakers = (Speakers) appliance;
                 setElement(SearchCriteria.Speakers.POWER_CONSUMPTION.toString(), String.valueOf(speakers.getPowerConsumption()));
                 setElement(SearchCriteria.Speakers.NUMBER_OF_SPEAKERS.toString(), String.valueOf(speakers.getNumberOfSpeakers()));
                 setElement(SearchCriteria.Speakers.FREQUENCY_RANGE.toString(), String.valueOf(speakers.getFrequencyRange()));
                 setElement(SearchCriteria.Speakers.CORD_LENGTH.toString(), String.valueOf(speakers.getCordLength()));
                 break;
-            case "TabletPC":
+            case TabletPC:
                 TabletPC tabletPC = (TabletPC) appliance;
                 setElement(SearchCriteria.TabletPC.BATTERY_CAPACITY.toString(), String.valueOf(tabletPC.getBatteryCapacity()));
                 setElement(SearchCriteria.TabletPC.DISPLAY_INCHES.toString(), String.valueOf(tabletPC.getDisplayINCHES()));
@@ -81,7 +80,7 @@ public final class ApplianceXMLWriter {
                 setElement(SearchCriteria.TabletPC.FLASH_MEMORY_CAPACITY.toString(), String.valueOf(tabletPC.getFlashMemoryCapacity()));
                 setElement(SearchCriteria.TabletPC.COLOR.toString(), String.valueOf(tabletPC.getColor()));
                 break;
-            case "VacuumCleaner":
+            case VacuumCleaner:
                 VacuumCleaner vacuumCleaner = (VacuumCleaner) appliance;
                 setElement(SearchCriteria.VacuumCleaner.POWER_CONSUMPTION.toString(), String.valueOf(vacuumCleaner.getPowerConsumption()));
                 setElement(SearchCriteria.VacuumCleaner.FILTER_TYPE.toString(), String.valueOf(vacuumCleaner.getFilterType()));
@@ -97,7 +96,7 @@ public final class ApplianceXMLWriter {
         TransformerFactory transformerFactory = TransformerFactory.newInstance();
         Transformer transformer = transformerFactory.newTransformer();
         DOMSource domSource = new DOMSource(document);
-        StreamResult streamResult = new StreamResult(pathToFile);
+        StreamResult streamResult = new StreamResult(dbFile);
         transformer.setOutputProperty(OutputKeys.INDENT, "yes");
         transformer.setOutputProperty("{http://xml.apache.org/xslt}indent-amount", "4");
         transformer.transform(domSource, streamResult);

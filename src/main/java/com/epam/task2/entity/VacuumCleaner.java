@@ -3,10 +3,11 @@ package com.epam.task2.entity;
 import com.epam.task2.entity.criteria.Criteria;
 import com.epam.task2.entity.criteria.SearchCriteria;
 
+import java.util.HashMap;
 import java.util.Map;
 import java.util.Objects;
 
-public class VacuumCleaner implements Appliance{
+public class VacuumCleaner extends Appliance{
     private double powerConsumption;
     private String filterType;
     private String bagType;
@@ -36,39 +37,21 @@ public class VacuumCleaner implements Appliance{
 
     @Override
     public boolean containsCriteria(Criteria criteria) {
-        if (!criteria.getTypeAppliance().equals(SearchCriteria.VacuumCleaner.class.getSimpleName())) {
+        if (!criteria.getTypeAppliance().equals(this.getClass().getSimpleName())) {
             return false;
         }
 
-        Map<String, Object> criteriaVacuumCleaner = criteria.getCriteria();
+        Map<String, Double> doubleFields = new HashMap<String, Double>();
+        doubleFields.put(SearchCriteria.VacuumCleaner.POWER_CONSUMPTION.toString(), powerConsumption);
+        doubleFields.put(SearchCriteria.VacuumCleaner.MOTOR_SPEED_REGULATION.toString(), motorSpeedRegulation);
+        doubleFields.put(SearchCriteria.VacuumCleaner.CLEANING_WIDTH.toString(), cleaningWidth);
 
-        boolean equal = !criteriaVacuumCleaner.isEmpty();
+        Map<String, String> stringFields = new HashMap<String, String>();
+        stringFields.put(SearchCriteria.VacuumCleaner.FILTER_TYPE.toString(), filterType);
+        stringFields.put(SearchCriteria.VacuumCleaner.BAG_TYPE.toString(), bagType);
+        stringFields.put(SearchCriteria.VacuumCleaner.WAND_TYPE.toString(), wandType);
 
-        if (criteriaVacuumCleaner.containsKey(SearchCriteria.VacuumCleaner.POWER_CONSUMPTION.toString())) {
-            double powerConsumption = Double.parseDouble(criteriaVacuumCleaner.get(SearchCriteria.VacuumCleaner.POWER_CONSUMPTION.toString()).toString());
-            equal = this.powerConsumption == powerConsumption && equal;
-        }
-        if (criteriaVacuumCleaner.containsKey(SearchCriteria.VacuumCleaner.FILTER_TYPE.toString())) {
-            String filterType = (String) criteriaVacuumCleaner.get(SearchCriteria.VacuumCleaner.FILTER_TYPE.toString());
-            equal = this.filterType.equals(filterType) && equal;
-        }
-        if (criteriaVacuumCleaner.containsKey(SearchCriteria.VacuumCleaner.BAG_TYPE.toString())) {
-            String bagType = (String) criteriaVacuumCleaner.get(SearchCriteria.VacuumCleaner.BAG_TYPE.toString());
-            equal = this.bagType.equals(bagType) && equal;
-        }
-        if (criteriaVacuumCleaner.containsKey(SearchCriteria.VacuumCleaner.WAND_TYPE.toString())) {
-            String wandType = (String) criteriaVacuumCleaner.get(SearchCriteria.VacuumCleaner.WAND_TYPE.toString());
-            equal = this.wandType.equals(wandType) && equal;
-        }
-        if (criteriaVacuumCleaner.containsKey(SearchCriteria.VacuumCleaner.MOTOR_SPEED_REGULATION.toString())) {
-            double motorSpeedRegulation = Double.parseDouble(criteriaVacuumCleaner.get(SearchCriteria.VacuumCleaner.MOTOR_SPEED_REGULATION.toString()).toString());
-            equal = this.motorSpeedRegulation == motorSpeedRegulation && equal;
-        }
-        if (criteriaVacuumCleaner.containsKey(SearchCriteria.VacuumCleaner.CLEANING_WIDTH.toString())) {
-            double cleaningWidth = Double.parseDouble(criteriaVacuumCleaner.get(SearchCriteria.VacuumCleaner.CLEANING_WIDTH.toString()).toString());
-            equal = this.cleaningWidth == cleaningWidth && equal;
-        }
-        return equal;
+        return checkFieldsByCriteria(criteria, doubleFields, stringFields);
     }
 
     public double getPowerConsumption() {

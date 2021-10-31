@@ -4,8 +4,8 @@ import com.epam.task2.dao.ApplianceDAO;
 import com.epam.task2.dao.DAOFactory;
 import com.epam.task2.entity.Appliance;
 import com.epam.task2.entity.criteria.Criteria;
-import com.epam.task2.exсeption.DAOException;
-import com.epam.task2.exсeption.ServiceException;
+import com.epam.task2.dao.DAOException;
+import com.epam.task2.service.ServiceException;
 import com.epam.task2.service.ApplianceService;
 import com.epam.task2.service.validation.Validator;
 
@@ -15,8 +15,10 @@ public class ApplianceServiceImpl implements ApplianceService{
 
 	@Override
 	public HashSet<Appliance> find(Criteria criteria) throws ServiceException {
-		if (!Validator.criteriaValidator(criteria)) {
-			throw new ServiceException();
+		try {
+			Validator.criteriaValidator(criteria);
+		} catch (ServiceException e) {
+			throw new ServiceException(e);
 		}
 
 		HashSet<Appliance> appliances;
@@ -28,14 +30,16 @@ public class ApplianceServiceImpl implements ApplianceService{
 		} catch (DAOException e) {
 			throw new ServiceException(e);
 		}
-		
 		return appliances;
 	}
 
 	@Override
 	public void addAppliance(Appliance appliance) throws ServiceException {
-		// TODO добавить валидатор
-		//if throw new ServiceException();
+		try {
+			Validator.newApplianceValidator(appliance);
+		} catch (ServiceException e) {
+			throw new ServiceException(e);
+		}
 
 		try {
 			DAOFactory factory = DAOFactory.getInstance();

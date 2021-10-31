@@ -2,7 +2,6 @@ package com.epam.task2.dao;
 
 import com.epam.task2.entity.Appliance;
 import com.epam.task2.entity.criteria.Criteria;
-import com.epam.task2.exсeption.DAOException;
 
 import java.util.HashSet;
 

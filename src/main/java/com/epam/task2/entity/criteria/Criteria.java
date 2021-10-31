@@ -1,13 +1,11 @@
 package com.epam.task2.entity.criteria;
 
-import java.util.HashMap;
-import java.util.Map;
-import java.util.Objects;
+import java.util.*;
 
 public class Criteria {
 
 	private String typeAppliance;
-	private Map<String, Object> criteria = new HashMap<String, Object>();
+	private Map<String, List<Object>> criteria = new HashMap<String, List<Object>>();
 
 	public Criteria(String typeAppliance) {
 		this.typeAppliance = typeAppliance;
@@ -18,10 +16,13 @@ public class Criteria {
 	}
 
 	public void add(String searchCriteria, Object value) {
-		criteria.put(searchCriteria, value.toString());
+		if (!criteria.containsKey(searchCriteria)) {
+			criteria.put(searchCriteria, new ArrayList<Object>());
+		}
+		criteria.get(searchCriteria).add(value.toString());
 	}
 
-	public Map<String, Object> getCriteria() {
+	public Map<String, List<Object>> getCriteria() {
 		return criteria;
 	}
 
@@ -37,5 +38,12 @@ public class Criteria {
 	public int hashCode() {
 		return Objects.hash(typeAppliance, criteria);
 	}
+
+	@Override
+	public String toString() {
+		return "Criteria{" +
+				"typeAppliance='" + typeAppliance + '\'' +
+				", criteria=" + criteria +
+				'}';
+	}
 }
-// TODO добавить toString и сделать List<Object>

@@ -3,10 +3,11 @@ package com.epam.task2.entity;
 import com.epam.task2.entity.criteria.Criteria;
 import com.epam.task2.entity.criteria.SearchCriteria;
 
+import java.util.HashMap;
 import java.util.Map;
 import java.util.Objects;
 
-public class Refrigerator implements Appliance{
+public class Refrigerator extends Appliance{
 	private double powerConsumption;
     private double weight;
     private double freezerCapacity;
@@ -36,39 +37,19 @@ public class Refrigerator implements Appliance{
 
     @Override
     public boolean containsCriteria(Criteria criteria) {
-        if (!criteria.getTypeAppliance().equals(SearchCriteria.Refrigerator.class.getSimpleName())) {
+        if (!criteria.getTypeAppliance().equals(this.getClass().getSimpleName())) {
             return false;
         }
 
-        Map<String, Object> criteriaRefrigerator = criteria.getCriteria();
+        Map<String, Double> doubleFields = new HashMap<String, Double>();
+        doubleFields.put(SearchCriteria.Refrigerator.POWER_CONSUMPTION.toString(), powerConsumption);
+        doubleFields.put(SearchCriteria.Refrigerator.WEIGHT.toString(), weight);
+        doubleFields.put(SearchCriteria.Refrigerator.FREEZER_CAPACITY.toString(), freezerCapacity);
+        doubleFields.put(SearchCriteria.Refrigerator.OVERALL_CAPACITY.toString(), overallCapacity);
+        doubleFields.put(SearchCriteria.Refrigerator.HEIGHT.toString(), height);
+        doubleFields.put(SearchCriteria.Refrigerator.WIDTH.toString(), width);
 
-        boolean equal = !criteriaRefrigerator.isEmpty();
-
-        if (criteriaRefrigerator.containsKey(SearchCriteria.Refrigerator.POWER_CONSUMPTION.toString())) {
-            double powerConsumption = Double.parseDouble(criteriaRefrigerator.get(SearchCriteria.Refrigerator.POWER_CONSUMPTION.toString()).toString());
-            equal = this.powerConsumption == powerConsumption && equal;
-        }
-        if (criteriaRefrigerator.containsKey(SearchCriteria.Refrigerator.WEIGHT.toString())) {
-            double weight = Double.parseDouble(criteriaRefrigerator.get(SearchCriteria.Refrigerator.WEIGHT.toString()).toString());
-            equal = this.weight == weight && equal;
-        }
-        if (criteriaRefrigerator.containsKey(SearchCriteria.Refrigerator.FREEZER_CAPACITY.toString())) {
-            double freezerCapacity = Double.parseDouble(criteriaRefrigerator.get(SearchCriteria.Refrigerator.FREEZER_CAPACITY.toString()).toString());
-            equal = this.freezerCapacity == freezerCapacity && equal;
-        }
-        if (criteriaRefrigerator.containsKey(SearchCriteria.Refrigerator.OVERALL_CAPACITY.toString())) {
-            double overallCapacity = Double.parseDouble(criteriaRefrigerator.get(SearchCriteria.Refrigerator.OVERALL_CAPACITY.toString()).toString());
-            equal = this.overallCapacity == overallCapacity && equal;
-        }
-        if (criteriaRefrigerator.containsKey(SearchCriteria.Refrigerator.HEIGHT.toString())) {
-            double height = Double.parseDouble(criteriaRefrigerator.get(SearchCriteria.Refrigerator.HEIGHT.toString()).toString());
-            equal = this.height == height && equal;
-        }
-        if (criteriaRefrigerator.containsKey(SearchCriteria.Refrigerator.WIDTH.toString())) {
-            double width = Double.parseDouble(criteriaRefrigerator.get(SearchCriteria.Refrigerator.WIDTH.toString()).toString());
-            equal = this.width == width && equal;
-        }
-        return equal;
+        return checkFieldsByCriteria(criteria, doubleFields, null);
     }
 
     public double getPowerConsumption() {

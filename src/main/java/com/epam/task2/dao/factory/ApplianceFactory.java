@@ -1,4 +1,7 @@
-package com.epam.task2.entity;
+package com.epam.task2.dao.factory;
+
+import com.epam.task2.constant.APPLIANCE_TYPES;
+import com.epam.task2.entity.*;
 
 import java.util.Map;
 
@@ -6,29 +9,27 @@ public final class ApplianceFactory {
     private ApplianceFactory() {}
 
     public static Appliance createAppliance(String typeAppliance, Map<String, Object> applianceData) {
-        Appliance appliance;
+        Appliance appliance = null;
 
-        switch(typeAppliance) {
-            case "Laptop":
+        switch(APPLIANCE_TYPES.valueOf(typeAppliance)) {
+            case Laptop:
                 appliance = new Laptop(applianceData);
                 break;
-            case "Oven":
+            case Oven:
                 appliance = new Oven(applianceData);
                 break;
-            case "Refrigerator":
+            case Refrigerator:
                 appliance = new Refrigerator(applianceData);
                 break;
-            case "Speakers":
+            case Speakers:
                 appliance = new Speakers(applianceData);
                 break;
-            case "TabletPC":
+            case TabletPC:
                 appliance = new TabletPC(applianceData);
                 break;
-            case "VacuumCleaner":
+            case VacuumCleaner:
                 appliance = new VacuumCleaner(applianceData);
                 break;
-            default:
-                throw new NullPointerException();
         }
 
         return appliance;

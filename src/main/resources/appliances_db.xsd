@@ -1,0 +1,123 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema"
+           targetNamespace="http://www.epam.task2.com/appliances">
+
+    <xs:element name="appliances">
+        <xs:complexType>
+            <xs:choice maxOccurs="unbounded">
+                <xs:element name="oven" type="Oven" minOccurs="0" />
+                <xs:element name="laptop" type="Laptop" minOccurs="0" />
+                <xs:element name="refrigerator" type="Refrigerator" minOccurs="0" />
+                <xs:element name="vacuum-cleaner" type="VacuumCleaner" minOccurs="0" />
+                <xs:element name="tablet-pc" type="TabletPC" minOccurs="0" />
+                <xs:element name="speakers" type="Speakers" minOccurs="0" />
+            </xs:choice>
+        </xs:complexType>
+    </xs:element>
+
+    <xs:complexType name="Oven">
+        <xs:sequence>
+            <xs:element name="power-consumption" type="xs:double"/>
+            <xs:element name="weight" type="xs:double"/>
+            <xs:element name="capacity" type="xs:double"/>
+            <xs:element name="depth" type="xs:double"/>
+            <xs:element name="height" type="xs:double"/>
+            <xs:element name="width" type="xs:double"/>
+        </xs:sequence>
+    </xs:complexType>
+
+    <xs:complexType name="Laptop">
+        <xs:sequence>
+            <xs:element name="battery-capacity" type="xs:double"/>
+            <xs:element name="os" type="OS"/>
+            <xs:element name="memory-rom" type="xs:double"/>
+            <xs:element name="system-memory" type="xs:double"/>
+            <xs:element name="cpu" type="xs:double"/>
+            <xs:element name="display-inches" type="xs:double"/>
+        </xs:sequence>
+    </xs:complexType>
+
+    <xs:complexType name="Refrigerator">
+        <xs:sequence>
+            <xs:element name="power-consumption" type="xs:double"/>
+            <xs:element name="weight" type="xs:double"/>
+            <xs:element name="freezer-capacity" type="xs:double"/>
+            <xs:element name="overall-capacity" type="xs:double"/>
+            <xs:element name="height" type="xs:double"/>
+            <xs:element name="width" type="xs:double"/>
+        </xs:sequence>
+    </xs:complexType>
+
+    <xs:complexType name="VacuumCleaner">
+        <xs:sequence>
+            <xs:element name="power-consumption" type="xs:double"/>
+            <xs:element name="filter-type" type="FILTER_TYPE"/>
+            <xs:element name="bag-type" type="BAG_TYPE"/>
+            <xs:element name="wand-type" type="WAND_TYPE"/>
+            <xs:element name="motor-speed-regulation" type="xs:double"/>
+            <xs:element name="cleaning-width" type="xs:double"/>
+        </xs:sequence>
+    </xs:complexType>
+
+    <xs:complexType name="TabletPC">
+        <xs:sequence>
+            <xs:element name="battery-capacity" type="xs:double"/>
+            <xs:element name="display-inches" type="xs:double"/>
+            <xs:element name="memory-rom" type="xs:double"/>
+            <xs:element name="flash-memory-capacity" type="xs:double"/>
+            <xs:element name="color" type="COLOR"/>
+        </xs:sequence>
+    </xs:complexType>
+
+    <xs:complexType name="Speakers">
+        <xs:sequence>
+            <xs:element name="power-consumption" type="xs:double"/>
+            <xs:element name="number-of-speakers" type="xs:double"/>
+            <xs:element name="frequency-range" type="xs:string"/>
+            <xs:element name="cord-length" type="xs:double"/>
+        </xs:sequence>
+    </xs:complexType>
+
+    <xs:simpleType name="OS">
+        <xs:restriction base="xs:string">
+            <xs:enumeration value="windows"/>
+            <xs:enumeration value="linux"/>
+            <xs:enumeration value="macos"/>
+        </xs:restriction>
+    </xs:simpleType>
+
+    <xs:simpleType name="FILTER_TYPE">
+        <xs:restriction base="xs:string">
+            <xs:enumeration value="a"/>
+            <xs:enumeration value="b"/>
+            <xs:enumeration value="c"/>
+        </xs:restriction>
+    </xs:simpleType>
+
+    <xs:simpleType name="BAG_TYPE">
+        <xs:restriction base="xs:string">
+            <xs:enumeration value="x1"/>
+            <xs:enumeration value="y2"/>
+            <xs:enumeration value="z3"/>
+        </xs:restriction>
+    </xs:simpleType>
+
+    <xs:simpleType name="WAND_TYPE">
+        <xs:restriction base="xs:string">
+            <xs:enumeration value="all-in-one"/>
+        </xs:restriction>
+    </xs:simpleType>
+
+    <xs:simpleType name="COLOR">
+        <xs:restriction base="xs:string">
+            <xs:enumeration value="white"/>
+            <xs:enumeration value="black"/>
+            <xs:enumeration value="gray"/>
+            <xs:enumeration value="brown"/>
+            <xs:enumeration value="blue"/>
+            <xs:enumeration value="red"/>
+            <xs:enumeration value="green"/>
+            <xs:enumeration value="yellow"/>
+        </xs:restriction>
+    </xs:simpleType>
+</xs:schema>

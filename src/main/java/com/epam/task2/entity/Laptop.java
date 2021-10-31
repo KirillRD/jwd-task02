@@ -3,10 +3,11 @@ package com.epam.task2.entity;
 import com.epam.task2.entity.criteria.Criteria;
 import com.epam.task2.entity.criteria.SearchCriteria;
 
+import java.util.HashMap;
 import java.util.Map;
 import java.util.Objects;
 
-public class Laptop implements Appliance{
+public class Laptop extends Appliance{
 	private double batteryCapacity;
 	private String os;
 	private double memoryROM;
@@ -36,39 +37,21 @@ public class Laptop implements Appliance{
 
 	@Override
 	public boolean containsCriteria(Criteria criteria) {
-		if (!criteria.getTypeAppliance().equals(SearchCriteria.Laptop.class.getSimpleName())) {
+		if (!criteria.getTypeAppliance().equals(this.getClass().getSimpleName())) {
 			return false;
 		}
 
-		Map<String, Object> criteriaLaptop = criteria.getCriteria();
+		Map<String, Double> doubleFields = new HashMap<String, Double>();
+		doubleFields.put(SearchCriteria.Laptop.BATTERY_CAPACITY.toString(), batteryCapacity);
+		doubleFields.put(SearchCriteria.Laptop.MEMORY_ROM.toString(), memoryROM);
+		doubleFields.put(SearchCriteria.Laptop.SYSTEM_MEMORY.toString(), systemMemory);
+		doubleFields.put(SearchCriteria.Laptop.CPU.toString(), cpu);
+		doubleFields.put(SearchCriteria.Laptop.DISPLAY_INCHES.toString(), displayINCHES);
 
-		boolean equal = !criteriaLaptop.isEmpty();
+		Map<String, String> stringFields = new HashMap<String, String>();
+		stringFields.put(SearchCriteria.Laptop.OS.toString(), os);
 
-		if (criteriaLaptop.containsKey(SearchCriteria.Laptop.BATTERY_CAPACITY.toString())) {
-			double batteryCapacity = Double.parseDouble(criteriaLaptop.get(SearchCriteria.Laptop.BATTERY_CAPACITY.toString()).toString());
-			equal = this.batteryCapacity == batteryCapacity && equal;
-		}
-		if (criteriaLaptop.containsKey(SearchCriteria.Laptop.OS.toString())) {
-			String os = (String) criteriaLaptop.get(SearchCriteria.Laptop.OS.toString());
-			equal = this.os.equals(os) && equal;
-		}
-		if (criteriaLaptop.containsKey(SearchCriteria.Laptop.MEMORY_ROM.toString())) {
-			double memoryROM = Double.parseDouble(criteriaLaptop.get(SearchCriteria.Laptop.MEMORY_ROM.toString()).toString());
-			equal = this.memoryROM == memoryROM && equal;
-		}
-		if (criteriaLaptop.containsKey(SearchCriteria.Laptop.SYSTEM_MEMORY.toString())) {
-			double systemMemory = Double.parseDouble(criteriaLaptop.get(SearchCriteria.Laptop.SYSTEM_MEMORY.toString()).toString());
-			equal = this.systemMemory == systemMemory && equal;
-		}
-		if (criteriaLaptop.containsKey(SearchCriteria.Laptop.CPU.toString())) {
-			double cpu = Double.parseDouble(criteriaLaptop.get(SearchCriteria.Laptop.CPU.toString()).toString());
-			equal = this.cpu == cpu && equal;
-		}
-		if (criteriaLaptop.containsKey(SearchCriteria.Laptop.DISPLAY_INCHES.toString())) {
-			double displayINCHES = Double.parseDouble(criteriaLaptop.get(SearchCriteria.Laptop.DISPLAY_INCHES.toString()).toString());
-			equal = this.displayINCHES == displayINCHES && equal;
-		}
-		return equal;
+		return checkFieldsByCriteria(criteria, doubleFields, stringFields);
 	}
 
 	public double getBatteryCapacity() {

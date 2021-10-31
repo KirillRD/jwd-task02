@@ -3,10 +3,11 @@ package com.epam.task2.entity;
 import com.epam.task2.entity.criteria.Criteria;
 import com.epam.task2.entity.criteria.SearchCriteria;
 
+import java.util.HashMap;
 import java.util.Map;
 import java.util.Objects;
 
-public class Speakers implements Appliance{
+public class Speakers extends Appliance{
     private double powerConsumption;
     private double numberOfSpeakers;
     private String frequencyRange;
@@ -30,31 +31,19 @@ public class Speakers implements Appliance{
 
     @Override
     public boolean containsCriteria(Criteria criteria) {
-        if (!criteria.getTypeAppliance().equals(SearchCriteria.Speakers.class.getSimpleName())) {
+        if (!criteria.getTypeAppliance().equals(this.getClass().getSimpleName())) {
             return false;
         }
 
-        Map<String, Object> criteriaSpeakers = criteria.getCriteria();
+        Map<String, Double> doubleFields = new HashMap<String, Double>();
+        doubleFields.put(SearchCriteria.Speakers.POWER_CONSUMPTION.toString(), powerConsumption);
+        doubleFields.put(SearchCriteria.Speakers.NUMBER_OF_SPEAKERS.toString(), numberOfSpeakers);
+        doubleFields.put(SearchCriteria.Speakers.CORD_LENGTH.toString(), cordLength);
 
-        boolean equal = !criteriaSpeakers.isEmpty();
+        Map<String, String> stringFields = new HashMap<String, String>();
+        stringFields.put(SearchCriteria.Speakers.FREQUENCY_RANGE.toString(), frequencyRange);
 
-        if (criteriaSpeakers.containsKey(SearchCriteria.Speakers.POWER_CONSUMPTION.toString())) {
-            double powerConsumption = Double.parseDouble(criteriaSpeakers.get(SearchCriteria.Speakers.POWER_CONSUMPTION.toString()).toString());
-            equal = this.powerConsumption == powerConsumption && equal;
-        }
-        if (criteriaSpeakers.containsKey(SearchCriteria.Speakers.NUMBER_OF_SPEAKERS.toString())) {
-            double numberOfSpeakers = Double.parseDouble(criteriaSpeakers.get(SearchCriteria.Speakers.NUMBER_OF_SPEAKERS.toString()).toString());
-            equal = this.numberOfSpeakers == numberOfSpeakers && equal;
-        }
-        if (criteriaSpeakers.containsKey(SearchCriteria.Speakers.FREQUENCY_RANGE.toString())) {
-            String frequencyRange = (String) criteriaSpeakers.get(SearchCriteria.Speakers.FREQUENCY_RANGE.toString());
-            equal = this.frequencyRange.equals(frequencyRange) && equal;
-        }
-        if (criteriaSpeakers.containsKey(SearchCriteria.Speakers.CORD_LENGTH.toString())) {
-            double cordLength = Double.parseDouble(criteriaSpeakers.get(SearchCriteria.Speakers.CORD_LENGTH.toString()).toString());
-            equal = this.cordLength == cordLength && equal;
-        }
-        return equal;
+        return checkFieldsByCriteria(criteria, doubleFields, stringFields);
     }
 
     public double getPowerConsumption() {

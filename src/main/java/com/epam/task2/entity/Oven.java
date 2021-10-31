@@ -3,10 +3,11 @@ package com.epam.task2.entity;
 import com.epam.task2.entity.criteria.Criteria;
 import com.epam.task2.entity.criteria.SearchCriteria;
 
+import java.util.HashMap;
 import java.util.Map;
 import java.util.Objects;
 
-public class Oven implements Appliance{
+public class Oven extends Appliance{
 	private double powerConsumption;
 	private double weight;
 	private double capacity;
@@ -36,39 +37,19 @@ public class Oven implements Appliance{
 
 	@Override
 	public boolean containsCriteria(Criteria criteria) {
-		if (!criteria.getTypeAppliance().equals(SearchCriteria.Oven.class.getSimpleName())) {
+		if (!criteria.getTypeAppliance().equals(this.getClass().getSimpleName())) {
 			return false;
 		}
 
-		Map<String, Object> criteriaOven = criteria.getCriteria();
+		Map<String, Double> doubleFields = new HashMap<String, Double>();
+		doubleFields.put(SearchCriteria.Oven.POWER_CONSUMPTION.toString(), powerConsumption);
+		doubleFields.put(SearchCriteria.Oven.WEIGHT.toString(), weight);
+		doubleFields.put(SearchCriteria.Oven.CAPACITY.toString(), capacity);
+		doubleFields.put(SearchCriteria.Oven.DEPTH.toString(), depth);
+		doubleFields.put(SearchCriteria.Oven.HEIGHT.toString(), height);
+		doubleFields.put(SearchCriteria.Oven.WIDTH.toString(), width);
 
-		boolean equal = !criteriaOven.isEmpty();
-
-		if (criteriaOven.containsKey(SearchCriteria.Oven.POWER_CONSUMPTION.toString())) {
-			double powerConsumption = Double.parseDouble(criteriaOven.get(SearchCriteria.Oven.POWER_CONSUMPTION.toString()).toString());
-			equal = this.powerConsumption == powerConsumption && equal;
-		}
-		if (criteriaOven.containsKey(SearchCriteria.Oven.WEIGHT.toString())) {
-			double weight = Double.parseDouble(criteriaOven.get(SearchCriteria.Oven.WEIGHT.toString()).toString());
-			equal = this.weight == weight && equal;
-		}
-		if (criteriaOven.containsKey(SearchCriteria.Oven.CAPACITY.toString())) {
-			double capacity = Double.parseDouble(criteriaOven.get(SearchCriteria.Oven.CAPACITY.toString()).toString());
-			equal = this.capacity == capacity && equal;
-		}
-		if (criteriaOven.containsKey(SearchCriteria.Oven.DEPTH.toString())) {
-			double depth = Double.parseDouble(criteriaOven.get(SearchCriteria.Oven.DEPTH.toString()).toString());
-			equal = this.depth == depth && equal;
-		}
-		if (criteriaOven.containsKey(SearchCriteria.Oven.HEIGHT.toString())) {
-			double height = Double.parseDouble(criteriaOven.get(SearchCriteria.Oven.HEIGHT.toString()).toString());
-			equal = this.height == height && equal;
-		}
-		if (criteriaOven.containsKey(SearchCriteria.Oven.WIDTH.toString())) {
-			double width = Double.parseDouble(criteriaOven.get(SearchCriteria.Oven.WIDTH.toString()).toString());
-			equal = this.width == width && equal;
-		}
-		return equal;
+		return checkFieldsByCriteria(criteria, doubleFields, null);
 	}
 
 	public double getPowerConsumption() {
