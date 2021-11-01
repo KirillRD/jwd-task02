@@ -11,8 +11,16 @@ import com.epam.task2.service.validation.Validator;
 
 import java.util.HashSet;
 
+/**
+ * Implements interface behavior {@link ApplianceService}
+ * Class contains logic for working with data
+ * @author Kirill Ryabov
+ */
 public class ApplianceServiceImpl implements ApplianceService{
 
+	/**
+	 * {@inheritDoc}
+	 */
 	@Override
 	public HashSet<Appliance> find(Criteria criteria) throws ServiceException {
 		try {
@@ -33,6 +41,9 @@ public class ApplianceServiceImpl implements ApplianceService{
 		return appliances;
 	}
 
+	/**
+	 * {@inheritDoc}
+	 */
 	@Override
 	public void addAppliance(Appliance appliance) throws ServiceException {
 		try {

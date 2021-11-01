@@ -10,9 +10,19 @@ import com.epam.task2.service.validation.ApplianceValidator;
 import java.util.List;
 import java.util.Map;
 
+/**
+ * Class that contains methods for verifying the validity of data for a device of type Refrigerator
+ * @author Kirill Ryabov
+ */
 public class RefrigeratorValidator extends ApplianceValidator {
+    /**
+     * Default constructor
+     */
     public RefrigeratorValidator() {}
 
+    /**
+     * {@inheritDoc}
+     */
     @Override
     public void isCriteriaValid(Criteria criteria) throws ServiceException {
         Map<String, List<Object>> criteriaAppliance = criteria.getCriteria();
@@ -37,6 +47,9 @@ public class RefrigeratorValidator extends ApplianceValidator {
         }
     }
 
+    /**
+     * {@inheritDoc}
+     */
     @Override
     public void isApplianceValid(Appliance appliance) throws ServiceException {
         Refrigerator refrigerator = (Refrigerator) appliance;

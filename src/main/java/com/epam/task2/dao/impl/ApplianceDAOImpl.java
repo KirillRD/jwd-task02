@@ -16,13 +16,25 @@ import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
 
+/**
+ * Implements interface behavior {@link ApplianceDAO}
+ * Class for working with data
+ * @author Kirill Ryabov
+ */
 public class ApplianceDAOImpl implements ApplianceDAO{
 	{
 		ClassLoader classLoader = getClass().getClassLoader();
 		dbFile = new File(classLoader.getResource("appliances_db.xml").getFile());
 	}
+
+	/**
+	 * Field that contains the data file
+	 */
 	private final File dbFile;
 
+	/**
+	 * {@inheritDoc}
+	 */
 	@Override
 	public HashSet<Appliance> find(Criteria criteria) throws DAOException {
 		HashSet<Appliance> foundAppliances = new HashSet<Appliance>();
@@ -44,6 +56,9 @@ public class ApplianceDAOImpl implements ApplianceDAO{
 		return foundAppliances;
 	}
 
+	/**
+	 * {@inheritDoc}
+	 */
 	@Override
 	public void addAppliance(Appliance appliance) throws DAOException {
 		try {

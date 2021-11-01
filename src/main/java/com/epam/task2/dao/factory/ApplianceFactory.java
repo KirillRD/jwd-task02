@@ -5,9 +5,23 @@ import com.epam.task2.entity.*;
 
 import java.util.Map;
 
+/**
+ * Class fabric of appliances
+ * This class can't be extended
+ * @author Kirill Ryabov
+ */
 public final class ApplianceFactory {
+    /**
+     * Restricting access to the creation of objects of this class
+     */
     private ApplianceFactory() {}
 
+    /**
+     * Method for creating appliance of a certain type with filled fields
+     * @param typeAppliance type of appliance
+     * @param applianceData HashMap with fields names(keys) and their values(values)
+     * @return object of one of the appliances
+     */
     public static Appliance createAppliance(String typeAppliance, Map<String, Object> applianceData) {
         Appliance appliance = null;
 

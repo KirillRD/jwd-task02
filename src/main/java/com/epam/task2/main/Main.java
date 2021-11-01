@@ -18,29 +18,24 @@ public class Main {
 
 		//////////////////////////////////////////////////////////////////
 
-//		Criteria criteriaLaptop = new Criteria(SearchCriteria.Laptop.class.getSimpleName());
-//		criteriaLaptop.add(SearchCriteria.Laptop.OS.toString(), "linux");
-//		criteriaLaptop.add(SearchCriteria.Laptop.OS.toString(), "windows");
-//		criteriaLaptop.add(SearchCriteria.Laptop.MEMORY_ROM.toString(), 8000);
+		Criteria criteriaLaptop = new Criteria(SearchCriteria.Laptop.class.getSimpleName());
+		criteriaLaptop.add(SearchCriteria.Laptop.OS.toString(), "linux");
+		criteriaLaptop.add(SearchCriteria.Laptop.OS.toString(), "windows");
+		criteriaLaptop.add(SearchCriteria.Laptop.MEMORY_ROM.toString(), 8000);
 
-//		Criteria criteriaLaptop = new Criteria(SearchCriteria.Laptop.class.getSimpleName());
-//		criteriaLaptop.add(SearchCriteria.Laptop.OS.toString(), "linux");
-//		criteriaLaptop.add(SearchCriteria.Laptop.OS.toString(), "windows");
-//		criteriaLaptop.add(SearchCriteria.Laptop.MEMORY_ROM.toString(), 8000);
-//
-//		appliances = service.find(criteriaLaptop);
-//
-//		PrintApplianceInfo.print(appliances);
+		appliances = service.find(criteriaLaptop);
+
+		PrintApplianceInfo.print(appliances);
 
 
-//		Criteria criteriaSpeakers = new Criteria(SearchCriteria.Speakers.class.getSimpleName());
-//		criteriaSpeakers.add(SearchCriteria.Speakers.CORD_LENGTH.toString(), 2);
-//		criteriaSpeakers.add(SearchCriteria.Speakers.CORD_LENGTH.toString(), 3);
-//		criteriaSpeakers.add(SearchCriteria.Speakers.FREQUENCY_RANGE.toString(), "3-4");
-//
-//		appliances = service.find(criteriaSpeakers);
-//
-//		PrintApplianceInfo.print(appliances);
+		Criteria criteriaSpeakers = new Criteria(SearchCriteria.Speakers.class.getSimpleName());
+		criteriaSpeakers.add(SearchCriteria.Speakers.CORD_LENGTH.toString(), 2);
+		criteriaSpeakers.add(SearchCriteria.Speakers.CORD_LENGTH.toString(), 3);
+		criteriaSpeakers.add(SearchCriteria.Speakers.FREQUENCY_RANGE.toString(), "3-4");
+
+		appliances = service.find(criteriaSpeakers);
+
+		PrintApplianceInfo.print(appliances);
 
 
 		service.addAppliance(new VacuumCleaner(
@@ -51,7 +46,5 @@ public class Main {
 				567,
 				34
 		));
-
-//		service.addAppliance(new VacuumCleaner());
 	}
 }

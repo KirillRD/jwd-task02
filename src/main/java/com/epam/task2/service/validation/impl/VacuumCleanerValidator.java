@@ -11,9 +11,19 @@ import com.epam.task2.service.validation.ApplianceValidator;
 import java.util.List;
 import java.util.Map;
 
+/**
+ * Class that contains methods for verifying the validity of data for a device of type Vacuum cleaner
+ * @author Kirill Ryabov
+ */
 public class VacuumCleanerValidator extends ApplianceValidator {
+    /**
+     * Default constructor
+     */
     public VacuumCleanerValidator() {}
 
+    /**
+     * {@inheritDoc}
+     */
     @Override
     public void isCriteriaValid(Criteria criteria) throws ServiceException {
         Map<String, List<Object>> criteriaAppliance = criteria.getCriteria();
@@ -56,6 +66,9 @@ public class VacuumCleanerValidator extends ApplianceValidator {
         }
     }
 
+    /**
+     * {@inheritDoc}
+     */
     @Override
     public void isApplianceValid(Appliance appliance) throws ServiceException {
         VacuumCleaner vacuumCleaner = (VacuumCleaner) appliance;
@@ -73,6 +86,11 @@ public class VacuumCleanerValidator extends ApplianceValidator {
         }
     }
 
+    /**
+     * Method returns true if the data is valid or false if not
+     * @param value checked filter type value
+     * @return true or false
+     */
     private boolean isFilterTypeValid(Object value) {
         for (POSSIBLE_VALUES.FILTER_TYPE valueFilterType : POSSIBLE_VALUES.FILTER_TYPE.values()) {
             if (valueFilterType.name().equals(value.toString().toUpperCase())) {
@@ -82,6 +100,11 @@ public class VacuumCleanerValidator extends ApplianceValidator {
         return false;
     }
 
+    /**
+     * Method returns true if the data is valid or false if not
+     * @param value checked wand type value
+     * @return true or false
+     */
     private boolean isWandTypeValid(Object value) {
         for (POSSIBLE_VALUES.WAND_TYPE valueWandType : POSSIBLE_VALUES.WAND_TYPE.values()) {
             String line = value.toString().toUpperCase().replaceAll("-", "_");
@@ -92,6 +115,11 @@ public class VacuumCleanerValidator extends ApplianceValidator {
         return false;
     }
 
+    /**
+     * Method returns true if the data is valid or false if not
+     * @param value checked bag type value
+     * @return true or false
+     */
     private boolean isBagTypeValid(Object value) {
         for (POSSIBLE_VALUES.BAG_TYPE valueBagType : POSSIBLE_VALUES.BAG_TYPE.values()) {
             if (valueBagType.name().equals(value.toString().toUpperCase())) {

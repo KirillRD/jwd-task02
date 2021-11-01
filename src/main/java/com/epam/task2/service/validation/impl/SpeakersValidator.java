@@ -10,9 +10,19 @@ import com.epam.task2.service.validation.ApplianceValidator;
 import java.util.List;
 import java.util.Map;
 
+/**
+ * Class that contains methods for verifying the validity of data for a device of type Speakers
+ * @author Kirill Ryabov
+ */
 public class SpeakersValidator extends ApplianceValidator {
+    /**
+     * Default constructor
+     */
     public SpeakersValidator() {}
 
+    /**
+     * {@inheritDoc}
+     */
     @Override
     public void isCriteriaValid(Criteria criteria) throws ServiceException {
         Map<String, List<Object>> criteriaAppliance = criteria.getCriteria();
@@ -41,6 +51,9 @@ public class SpeakersValidator extends ApplianceValidator {
         }
     }
 
+    /**
+     * {@inheritDoc}
+     */
     @Override
     public void isApplianceValid(Appliance appliance) throws ServiceException {
         Speakers speakers = (Speakers) appliance;
@@ -52,6 +65,11 @@ public class SpeakersValidator extends ApplianceValidator {
         }
     }
 
+    /**
+     * Method returns true if the data is valid or false if not
+     * @param value checked frequency range value
+     * @return true or false
+     */
     private boolean isFrequencyRangeValid(Object value) {
         String line = value.toString();
         int position = line.indexOf("-");

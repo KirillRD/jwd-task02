@@ -16,18 +16,46 @@ import javax.xml.transform.stream.StreamResult;
 import java.io.File;
 import java.io.IOException;
 
+/**
+ * Class for writing single appliance type with all filled fields in XML file
+ * This class can't be extended
+ * @author Kirill Ryabov
+ */
 public final class ApplianceXMLWriter {
+    /**
+     * Field that contains XML file
+     */
     private static Document document;
+    /**
+     * File that contains elements for writing in XML file
+     */
     private static Element newAppliance;
 
+    /**
+     * Restricting access to the creation of objects of this class
+     */
     private ApplianceXMLWriter() {}
 
+    /**
+     * Method creates XML element for writing in XML file
+     * @param nameField name of field
+     * @param valueField value of field
+     */
     private static void setElement(String nameField, String valueField) {
         Element element = document.createElement(nameField.toLowerCase().replaceAll("_", "-"));
         element.setTextContent(valueField.toLowerCase().replaceAll("_", "-"));
         newAppliance.appendChild(element);
     }
 
+    /**
+     * Method writes appliance in XML file
+     * @param appliance single appliance type with all filled fields
+     * @param dbFile XML file with data
+     * @throws ParserConfigurationException
+     * @throws IOException
+     * @throws SAXException
+     * @throws TransformerException
+     */
     public static void saveAppliance(Appliance appliance, File dbFile) throws ParserConfigurationException, IOException, SAXException, TransformerException {
         DocumentBuilderFactory documentBuilderFactory = DocumentBuilderFactory.newInstance();
         DocumentBuilder documentBuilder = documentBuilderFactory.newDocumentBuilder();
@@ -45,7 +73,7 @@ public final class ApplianceXMLWriter {
                 setElement(SearchCriteria.Laptop.MEMORY_ROM.toString(), String.valueOf(laptop.getMemoryROM()));
                 setElement(SearchCriteria.Laptop.SYSTEM_MEMORY.toString(), String.valueOf(laptop.getSystemMemory()));
                 setElement(SearchCriteria.Laptop.CPU.toString(), String.valueOf(laptop.getCpu()));
-                setElement(SearchCriteria.Laptop.DISPLAY_INCHES.toString(), String.valueOf(laptop.getDisplayINCHES()));
+                setElement(SearchCriteria.Laptop.DISPLAY_INCHES.toString(), String.valueOf(laptop.getDisplayInches()));
                 break;
             case Oven:
                 Oven oven = (Oven) appliance;
@@ -75,7 +103,7 @@ public final class ApplianceXMLWriter {
             case TabletPC:
                 TabletPC tabletPC = (TabletPC) appliance;
                 setElement(SearchCriteria.TabletPC.BATTERY_CAPACITY.toString(), String.valueOf(tabletPC.getBatteryCapacity()));
-                setElement(SearchCriteria.TabletPC.DISPLAY_INCHES.toString(), String.valueOf(tabletPC.getDisplayINCHES()));
+                setElement(SearchCriteria.TabletPC.DISPLAY_INCHES.toString(), String.valueOf(tabletPC.getDisplayInches()));
                 setElement(SearchCriteria.TabletPC.MEMORY_ROM.toString(), String.valueOf(tabletPC.getMemoryROM()));
                 setElement(SearchCriteria.TabletPC.FLASH_MEMORY_CAPACITY.toString(), String.valueOf(tabletPC.getFlashMemoryCapacity()));
                 setElement(SearchCriteria.TabletPC.COLOR.toString(), String.valueOf(tabletPC.getColor()));
